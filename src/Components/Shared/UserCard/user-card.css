@@ -1,0 +1,94 @@
+.user-card {
+  display: flex;
+  padding: 0.5rem 1rem;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+.user-img-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 25%;
+}
+.user-img-cont .user-img {
+  border-radius: 50%;
+  width: 70%;
+  height: auto;
+}
+.user-meta {
+  width: 65%;
+  padding-left: 1rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-option {
+  position: relative;
+  right: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  border-radius: 100%;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.user-option.disable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.user-option.active:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+.setting-btn,
+.logout-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.setting-btn {
+  height: 3rem !important;
+  border-radius: 50%;
+}
+.logout-btn {
+  height: 3rem !important;
+  border-radius: 3rem;
+}
+.user-option.active:hover > i {
+  transform: rotateZ(-180deg);
+}
+.user-option.active:hover .setting-btn {
+  opacity: 1;
+  left: 3.5rem;
+  width: 3rem !important;
+}
+.user-option.active:hover .logout-btn {
+  opacity: 1;
+  left: 7rem;
+  width: 8rem !important;
+}
+.user-option.active > i {
+  transition: 0.3s ease;
+}
+.setting-btn i {
+  transition: 0.5s ease;
+}
+.user-option.active:hover .setting-btn i {
+  transform: rotateZ(180deg);
+}
+.user-name {
+  color: #fff;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+}

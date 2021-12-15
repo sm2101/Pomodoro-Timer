@@ -1,0 +1,45 @@
+.button {
+  background-color: rgba(255, 255, 255, 0.562) !important;
+  backdrop-filter: blur(30px);
+  padding: 1rem 0.5rem;
+  border-radius: 0.4rem;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  transition: 0.3s ease;
+}
+.button:disabled {
+  cursor: not-allowed;
+}
+.button.bg-green {
+  background-color: rgba(203, 238, 147, 0.9) !important;
+}
+.button.bg-red {
+  background-color: rgba(238, 147, 147, 0.9) !important;
+}
+.button.bg-green:hover:not(:disabled) {
+  background-color: rgb(176, 211, 119) !important;
+}
+.button.bg-red:hover:not(:disabled) {
+  background-color: rgb(228, 120, 120) !important;
+}
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .button {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+  }
+  .button.bg-green {
+    background-color: rgba(203, 238, 147, 0.5) !important;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+  }
+  .button.bg-red {
+    background-color: rgba(238, 147, 147, 0.5) !important;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+  }
+}

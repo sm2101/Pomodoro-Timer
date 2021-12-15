@@ -1,0 +1,101 @@
+.preset-card-wrapper {
+  width: 100%;
+  padding: 0 0.2rem;
+  background-color: rgba(51, 51, 51, 1);
+  border-radius: 0.75rem;
+  margin: 0.25rem 0;
+  overflow: hidden;
+}
+.preset-card-header {
+  width: 100%;
+  padding: 0 0.5rem;
+  border-radius: 0.4rem;
+  border-bottom-right-radius: 0;
+  position: relative;
+  top: 0.55rem;
+  display: flex;
+  justify-content: space-between;
+}
+.preset-card-header input {
+  width: 30%;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+.preset-card-header input:focus-visible {
+  outline: none;
+}
+.preset-card {
+  padding: 0.8rem 0.5rem 0.2rem 0.5rem;
+  background-color: rgba(51, 51, 51, 1);
+  border-radius: 0.5rem;
+  border-top-left-radius: 0;
+  height: 0;
+  transition: 0.3s ease;
+}
+.preset-card.open {
+  height: 4.5rem;
+}
+.preset-card-input-group {
+  display: flex;
+}
+.button-conatiner {
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+}
+.save-btn,
+.load-btn {
+  border: none;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0;
+}
+.save-btn {
+  width: 25%;
+}
+.load-btn {
+  width: 70%;
+}
+.save-btn span,
+.load-btn span {
+  margin-left: 0.1rem;
+}
+.preset-button {
+  border: none;
+  background: transparent;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 0.25rem;
+}
+.preset-button:last-of-type {
+  margin-right: 0;
+}
+.preset-buttons-group {
+  display: flex;
+}
+.preset-button i {
+  transition: 0.3s ease;
+  color: #fff;
+}
+.preset-button.open i {
+  transform: rotateZ(-180deg);
+}
+.preset-button.check {
+  background: #fff;
+  opacity: 0;
+  visibility: none;
+  transition: 0.3s ease;
+}
+.preset-button.check.show {
+  opacity: 1;
+  visibility: visible;
+}
+.preset-button.check i {
+  color: rgb(14, 173, 0);
+}

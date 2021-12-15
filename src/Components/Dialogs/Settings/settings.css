@@ -1,0 +1,81 @@
+#setting-title {
+  color: #fff;
+  font-size: 2rem;
+  padding: 0 0 0.5rem 0.25rem;
+}
+#setting-sub-title {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.5rem;
+  padding: 0.5rem 0 0.25rem 1rem;
+}
+.setting-box {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+.MuiDialog-paper {
+  background-color: transparent !important;
+  border-radius: 0.75rem !important;
+}
+.timer-input-group {
+  display: flex;
+  justify-content: space-around;
+}
+.timer-input {
+  width: 25%;
+  transition: 0.3s ease;
+  overflow: hidden;
+}
+.preset-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+.misc-settings {
+  margin: 0.2rem 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+.misc-wrapper {
+  width: 50%;
+  padding: 0.25rem;
+}
+.misc {
+  background: rgb(51, 51, 51);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.misc span {
+  color: #fff;
+  font-weight: 300;
+}
+.misc span.small {
+  font-size: 0.85rem;
+}
+.MuiSwitch-track {
+  background: rgb(255, 255, 255) !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked
+  + .MuiSwitch-track {
+  background: rgb(81, 255, 0) !important;
+}
+.preset-login-wrapper {
+  padding: 0.5rem;
+}
+.preset-login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: rgba(51, 51, 51, 1);
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+  color: #fff;
+}
+.preset-login-box div {
+  padding: 0.25rem 0 0.75rem 0;
+}

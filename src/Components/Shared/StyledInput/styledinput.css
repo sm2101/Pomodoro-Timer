@@ -1,0 +1,51 @@
+.styled-input {
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  text-align: right;
+  padding-right: 0.8rem;
+}
+.dark {
+  background-color: rgb(51, 51, 51) !important;
+  color: #fff;
+}
+.light {
+  background-color: #fff;
+  color: rgb(51, 51, 51);
+}
+.lg {
+  font-size: 1.5rem;
+  height: 3rem;
+}
+.sm {
+  font-size: 1.2rem;
+  height: 2rem;
+}
+.styled-label {
+  font-weight: 300;
+  position: relative;
+  border-radius: 0.3rem;
+  padding: 0 0.2rem;
+  z-index: 99;
+}
+.styled-label.dark {
+  background-color: rgba(51, 51, 51, 1) !important;
+  color: rgb(255, 255, 255);
+}
+.styled-label.light {
+  background-color: rgb(51, 51, 51) !important;
+  color: #fff;
+}
+.styled-label.lg {
+  top: 0.5rem;
+  padding: 0 0.4rem;
+  font-size: 0.9rem;
+}
+.styled-label.sm {
+  top: 0.3rem;
+  left: 0.4rem;
+  font-size: 0.8rem;
+}
+.styled-input-wrapper {
+  padding: 0 0.2rem;
+}

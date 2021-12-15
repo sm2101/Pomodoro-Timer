@@ -1,0 +1,11 @@
+.blur-box {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(30px);
+}
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .blur-box {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+  }
+}
