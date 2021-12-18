@@ -1,11 +1,12 @@
 import { SET_ALL_BG_DATA, SET_CURRENT_BG } from "../Constants";
 
-export const setCurrent = (dispatch, bg, audio) => {
+export const setCurrent = (dispatch, bg, audio, name) => {
   dispatch({
     type: SET_CURRENT_BG,
     payload: {
       bg,
       audio,
+      name,
     },
   });
 };

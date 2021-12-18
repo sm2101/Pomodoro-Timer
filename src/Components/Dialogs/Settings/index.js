@@ -11,12 +11,15 @@ import { Switch } from "@mui/material";
 import Button from "../../Shared/Button";
 import { signInWithGoogle } from "../../../Firebase/auth";
 import { login } from "../../../App/Actions/userActions";
+import BgCard from "../../Shared/BgCard";
 import "./settings.css";
 const SettingDialog = () => {
   const [user, setUser] = useState(null);
-  const { settingState, counterState, refreshState } = useSelector((state) => ({
-    ...state,
-  }));
+  const { settingState, counterState, refreshState, bgState } = useSelector(
+    (state) => ({
+      ...state,
+    })
+  );
   const { focus, short, long, auto, strict, maxSession } = counterState;
   const dispatch = useDispatch();
   const handleLogin = () => {
@@ -223,7 +226,8 @@ const SettingDialog = () => {
             </div>
           </div>
         )}
-        <div className="auto-cont"></div>
+        <div id="customization-sub-title">Customization</div>
+        <BgCard />
       </BlurBox>
     </Dialog>
   );

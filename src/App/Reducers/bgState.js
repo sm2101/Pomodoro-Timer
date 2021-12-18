@@ -5,6 +5,7 @@ const initialState = {
   name: null,
   allData: null,
   playAudio: false,
+  audioVolume: 0.5,
 };
 const bgReducer = (state = initialState, { type, payload }) => {
   switch (type) {

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAll } from "./App/Actions/bgActions";
 import Timer from "./Components/Timer";
@@ -11,7 +11,7 @@ const App = () => {
   const { counterState, bgState } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   useEffect(() => {
-    audioRef.current.volume = 0.3;
+    audioRef.current.volume = bgState.audioVolume;
     if (window.HTMLAudioElement) {
       if (counterState.isActive) {
         if (audioRef.current.paused) {
@@ -23,7 +23,12 @@ const App = () => {
         }
       }
     }
-  }, [bgState.playAudio, counterState.isActive]);
+  }, [
+    bgState.audioVolume,
+    bgState.playAudio,
+    counterState.audioVolume,
+    counterState.isActive,
+  ]);
   useEffect(() => {
     getBackgrounds().then((res) => {
       setAll(dispatch, res.data);
