@@ -2,7 +2,8 @@ import React from "react";
 import BlurBox from "../BlurBox";
 import Button from "../Button";
 import "./user-card.css";
-import { logout } from "../../../Firebase/auth";
+import { signOutFromGoogle } from "../../../Firebase/auth";
+import { logout } from "../../../App/Actions/userActions";
 import { toggleSetting } from "../../../App/Actions/settingActions";
 import { useDispatch, useSelector } from "react-redux";
 const UserCard = ({ user }) => {
@@ -12,6 +13,10 @@ const UserCard = ({ user }) => {
     if (!settingState) {
       toggleSetting(dispatch);
     }
+  };
+  const handleLogout = () => {
+    signOutFromGoogle();
+    logout(dispatch);
   };
   return (
     <BlurBox id="user-card" classNames="user-card">
@@ -39,7 +44,7 @@ const UserCard = ({ user }) => {
           id="logout-btn"
           classNames="logout-btn bg-red"
           text="Logout"
-          action={logout}
+          action={handleLogout}
           disabled={counterState.isActive}
         >
           <i className="fas fa-power-off"></i>

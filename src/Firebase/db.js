@@ -21,6 +21,15 @@ export const setData = async ({
   name,
   preset,
 }) => {
+  console.log({
+    id,
+    focus,
+    long,
+    short,
+    longDuration,
+    name,
+    preset,
+  });
   await updateDoc(doc(db, "users", id), {
     [preset]: {
       focus,
@@ -30,4 +39,9 @@ export const setData = async ({
       name,
     },
   });
+};
+
+export const getBackgrounds = async () => {
+  let query = await getDoc(doc(db, "bgs", "default"));
+  return { ...query.data() };
 };

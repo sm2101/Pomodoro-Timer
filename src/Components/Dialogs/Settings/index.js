@@ -10,6 +10,7 @@ import StyledInput from "../../Shared/StyledInput";
 import { Switch } from "@mui/material";
 import Button from "../../Shared/Button";
 import { signInWithGoogle } from "../../../Firebase/auth";
+import { login } from "../../../App/Actions/userActions";
 import "./settings.css";
 const SettingDialog = () => {
   const [user, setUser] = useState(null);
@@ -18,6 +19,29 @@ const SettingDialog = () => {
   }));
   const { focus, short, long, auto, strict, maxSession } = counterState;
   const dispatch = useDispatch();
+  const handleLogin = () => {
+    signInWithGoogle()
+      .then((res) => {
+        window.localStorage.setItem("user", JSON.stringify(res));
+        window.localStorage.setItem(
+          "session",
+          JSON.stringify({
+            focus: res.preset1.focus,
+            short: res.preset1.short,
+            long: res.preset1.long,
+            break: res.preset1.break,
+          })
+        );
+        login(dispatch, {
+          isAuthenticated: true,
+          user: res,
+        });
+        refresh(dispatch);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   const handleClose = () => {
     if (settingState) {
       toggleSetting(dispatch);
@@ -191,7 +215,7 @@ const SettingDialog = () => {
               <Button
                 id="auth-btn-setting"
                 text="Login"
-                action={signInWithGoogle}
+                action={handleLogin}
                 width="50"
               >
                 <i className="fab fa-google"></i>

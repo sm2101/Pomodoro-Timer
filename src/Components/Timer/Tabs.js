@@ -11,25 +11,49 @@ import { auth } from "../../Firebase";
 import { toggleSetting } from "../../App/Actions/settingActions";
 import { refresh } from "../../App/Actions/refreshActions";
 import { signInWithGoogle } from "../../Firebase/auth";
+import { login } from "../../App/Actions/userActions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "../Shared/Button";
 import UserCard from "../Shared/UserCard";
+import { Helmet } from "react-helmet";
+import addNotification from "react-push-notification";
 const Tabs = ({ tab, changeTabs }) => {
   const [secondsLeft, setSecondsLeft] = useState(null),
     [timer, setTimer] = useState(null),
     [user, loading, error] = useAuthState(auth),
-    [authUser, setAuthUser] = useState({
-      isAuthenticated: false,
-      user: null,
-    }),
     [cuurentSession, setCurrentSession] = useState({
       short: 0,
       focus: 0,
       long: 0,
     });
 
-  const { counterState, refreshState } = useSelector((state) => ({ ...state }));
+  const { counterState, refreshState, userState } = useSelector((state) => ({
+    ...state,
+  }));
   const dispatch = useDispatch();
+  const handleNotifiactiosn = (title, subtitle, message) => {
+    if (Notification.permission === "granted") {
+      addNotification({
+        title,
+        subtitle,
+        message,
+        native: true,
+      });
+      addNotification({
+        title,
+        subtitle,
+        message,
+        native: false,
+      });
+    } else if (Notification.permission === "denied") {
+      addNotification({
+        title,
+        subtitle,
+        message,
+        native: false,
+      });
+    }
+  };
   const handleLogin = () => {
     signInWithGoogle()
       .then((res) => {
@@ -43,10 +67,7 @@ const Tabs = ({ tab, changeTabs }) => {
             break: res.preset1.break,
           })
         );
-        setAuthUser({
-          isAuthenticated: true,
-          user: res,
-        });
+        login(dispatch, { isAuthenticated: true, user: res });
         refresh(dispatch);
       })
       .catch((err) => {
@@ -97,8 +118,18 @@ const Tabs = ({ tab, changeTabs }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const startBreak = () => {
     if (counterState.session < counterState.longDuration) {
+      handleNotifiactiosn(
+        "Time For a Break",
+        "Pomodoro Timer",
+        "Time to take a short breather"
+      );
       changeTabs("short");
     } else {
+      handleNotifiactiosn(
+        "Time For a Break",
+        "Pomodoro Timer",
+        "Time for a long break"
+      );
       changeTabs("long");
       editCounter(dispatch, {
         totalSessions: counterState.totalSessions + 1,
@@ -107,6 +138,11 @@ const Tabs = ({ tab, changeTabs }) => {
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const startFocus = () => {
+    handleNotifiactiosn(
+      "Time to focus again",
+      "Pomodoro Timer",
+      "Let's get back to work!!"
+    );
     changeTabs("focus");
   };
 
@@ -166,14 +202,34 @@ const Tabs = ({ tab, changeTabs }) => {
       console.error(error);
     }
     if (user) {
-      setAuthUser({
+      login(dispatch, {
         isAuthenticated: true,
         user: JSON.parse(window.localStorage.getItem("user")),
       });
     }
-  }, [user, loading, error]);
+  }, [user, loading, error, dispatch]);
   return (
     <>
+      <Helmet>
+        <title>
+          {counterState.isActive
+            ? `${Math.floor(secondsLeft / 60).toLocaleString("en-US", {
+                minimumIntegerDigits: 2,
+              })}:${(
+                secondsLeft -
+                Math.floor(secondsLeft / 60) * 60
+              ).toLocaleString("en-US", {
+                minimumIntegerDigits: 2,
+              })} - ${
+                tab === "short"
+                  ? "Short Break"
+                  : tab === "long"
+                  ? "Long Break"
+                  : "Focus"
+              }`
+            : "Pomodoro Timer"}
+        </title>
+      </Helmet>
       <ul className="tab-list">
         <li
           className={`tab-list-item ${tab === "short" && "active"}`}
@@ -232,7 +288,7 @@ const Tabs = ({ tab, changeTabs }) => {
             width="80"
           />
         </div>
-        {!authUser.isAuthenticated ? (
+        {!userState.isAuthenticated ? (
           <div className="login-cont">
             <Button
               id="auth-btn"
@@ -255,7 +311,7 @@ const Tabs = ({ tab, changeTabs }) => {
         ) : (
           <>
             <div className="user-cont">
-              <UserCard user={authUser.user} />
+              <UserCard user={userState.user} />
             </div>
           </>
         )}

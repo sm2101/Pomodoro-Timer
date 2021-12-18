@@ -1,14 +1,49 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setAll } from "./App/Actions/bgActions";
 import Timer from "./Components/Timer";
 import SettingDialog from "./Components/Dialogs/Settings";
+import { getBackgrounds } from "./Firebase/db";
+import { Notifications } from "react-push-notification";
 const App = () => {
-  const [bg] = useState("https://picsum.photos/1920/1080");
+  const audioRef = useRef();
+  const { counterState, bgState } = useSelector((state) => ({ ...state }));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    audioRef.current.volume = 0.3;
+    if (window.HTMLAudioElement) {
+      if (counterState.isActive) {
+        if (audioRef.current.paused) {
+          audioRef.current.play();
+        }
+      } else {
+        if (!audioRef.current.paused) {
+          audioRef.current.pause();
+        }
+      }
+    }
+  }, [bgState.playAudio, counterState.isActive]);
+  useEffect(() => {
+    getBackgrounds().then((res) => {
+      setAll(dispatch, res.data);
+    });
+  }, [dispatch]);
   return (
-    <div className="App" style={{ background: `url(${bg})` }}>
-      <Timer />
-      <SettingDialog />
-    </div>
+    <>
+      <div
+        className="App"
+        style={{
+          // backgroundColor: "#000",
+          background: `#000 url(${bgState.bg}) no-repeat center`,
+        }}
+      >
+        <Notifications position="bottom-right" />
+        <Timer />
+        <SettingDialog />
+        <audio src={bgState.audio ? bgState.audio : ""} loop ref={audioRef} />
+      </div>
+    </>
   );
 };
 

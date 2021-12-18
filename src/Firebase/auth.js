@@ -68,7 +68,7 @@ export const signInWithGoogle = async () => {
   }
 };
 
-export const logout = () => {
+export const signOutFromGoogle = () => {
   signOut(auth)
     .then(() => {
       localStorage.removeItem("user");
