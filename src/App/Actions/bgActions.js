@@ -1,4 +1,9 @@
-import { SET_ALL_BG_DATA, SET_CURRENT_BG } from "../Constants";
+import {
+  SET_ALL_BG_DATA,
+  SET_CURRENT_BG,
+  SET_AUDIO,
+  TOGGLE_AUDIO,
+} from "../Constants";
 
 export const setCurrent = (dispatch, bg, audio, name) => {
   dispatch({
@@ -20,5 +25,18 @@ export const setAll = (dispatch, data) => {
       name: data[0].name,
       allData: data,
     },
+  });
+};
+
+export const setAudioVol = (dispatch, vol) => {
+  dispatch({
+    type: SET_AUDIO,
+    payload: vol,
+  });
+};
+
+export const toggleAudio = (dispatch) => {
+  dispatch({
+    type: TOGGLE_AUDIO,
   });
 };

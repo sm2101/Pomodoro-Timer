@@ -32,27 +32,20 @@ const Tabs = ({ tab, changeTabs }) => {
   }));
   const dispatch = useDispatch();
   const handleNotifiactiosn = (title, subtitle, message) => {
-    if (Notification.permission === "granted") {
+    if (counterState.notification) {
       addNotification({
         title,
         subtitle,
         message,
         native: true,
       });
-      addNotification({
-        title,
-        subtitle,
-        message,
-        native: false,
-      });
-    } else if (Notification.permission === "denied") {
-      addNotification({
-        title,
-        subtitle,
-        message,
-        native: false,
-      });
     }
+    addNotification({
+      title,
+      subtitle,
+      message,
+      native: false,
+    });
   };
   const handleLogin = () => {
     signInWithGoogle()

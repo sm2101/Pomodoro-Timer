@@ -39,11 +39,9 @@
 }
 .misc-settings {
   margin: 0.2rem 0;
-  display: flex;
-  justify-content: space-evenly;
 }
 .misc-wrapper {
-  width: 50%;
+  width: 100%;
   padding: 0.25rem;
 }
 .misc {

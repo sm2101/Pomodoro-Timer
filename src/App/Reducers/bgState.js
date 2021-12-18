@@ -1,4 +1,9 @@
-import { SET_ALL_BG_DATA, SET_CURRENT_BG } from "../Constants";
+import {
+  SET_ALL_BG_DATA,
+  SET_CURRENT_BG,
+  SET_AUDIO,
+  TOGGLE_AUDIO,
+} from "../Constants";
 const initialState = {
   bg: null,
   audio: null,
@@ -16,6 +21,10 @@ const bgReducer = (state = initialState, { type, payload }) => {
       };
     case SET_ALL_BG_DATA:
       return { ...state, ...payload };
+    case SET_AUDIO:
+      return { ...state, audioVolume: payload };
+    case TOGGLE_AUDIO:
+      return { ...state, playAudio: !state.playAudio };
     default:
       return state;
   }

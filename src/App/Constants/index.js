@@ -11,3 +11,5 @@ export const LOGOUT = "logout";
 export const SET_CURRENT_BG = "set current bg";
 export const SET_CURRENT_AUDIO = "set current audio";
 export const SET_ALL_BG_DATA = "set all bg data";
+export const SET_AUDIO = "set audio";
+export const TOGGLE_AUDIO = "toogle audio";

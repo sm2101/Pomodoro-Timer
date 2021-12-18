@@ -1,5 +1,5 @@
 import { db } from "./index";
-import { doc, setDoc, getDoc, updateDoc } from "@firebase/firestore";
+import { doc, getDoc, updateDoc } from "@firebase/firestore";
 
 export const getUser = async (id) => {
   let query = await getDoc(doc(db, "users", id));

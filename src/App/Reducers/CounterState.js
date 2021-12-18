@@ -22,6 +22,7 @@ const initialState = {
   strict: session?.strict || false,
   maxSession: session?.maxSession || 4,
   totalSessions: 0,
+  notification: Notification.permission === "granted" ? true : false,
 };
 
 const counterReducer = (state = initialState, { type, payload }) => {

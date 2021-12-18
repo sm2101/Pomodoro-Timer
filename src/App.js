@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     audioRef.current.volume = bgState.audioVolume;
     if (window.HTMLAudioElement) {
-      if (counterState.isActive) {
+      if (counterState.isActive || bgState.playAudio) {
         if (audioRef.current.paused) {
           audioRef.current.play();
         }

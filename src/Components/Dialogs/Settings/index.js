@@ -12,15 +12,16 @@ import Button from "../../Shared/Button";
 import { signInWithGoogle } from "../../../Firebase/auth";
 import { login } from "../../../App/Actions/userActions";
 import BgCard from "../../Shared/BgCard";
+import Cookies from "js-cookie";
 import "./settings.css";
+import addNotification from "react-push-notification";
 const SettingDialog = () => {
   const [user, setUser] = useState(null);
-  const { settingState, counterState, refreshState, bgState } = useSelector(
-    (state) => ({
-      ...state,
-    })
-  );
-  const { focus, short, long, auto, strict, maxSession } = counterState;
+  const { settingState, counterState, refreshState } = useSelector((state) => ({
+    ...state,
+  }));
+  const { focus, short, long, auto, strict, maxSession, notification } =
+    counterState;
   const dispatch = useDispatch();
   const handleLogin = () => {
     signInWithGoogle()
@@ -83,6 +84,27 @@ const SettingDialog = () => {
       longDuration,
     });
     refresh(dispatch);
+  };
+  const handleNotification = () => {
+    if (!notification && Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission !== "granted") {
+          addNotification({
+            title: "Notification Permission Denied",
+            message:
+              "Please Enable Notifications in your Browser to use this feature",
+          });
+        } else {
+          editCounter(dispatch, {
+            notification: true,
+          });
+        }
+      });
+    } else {
+      editCounter(dispatch, {
+        notification: !notification,
+      });
+    }
   };
   useEffect(() => {
     setUser(
@@ -170,7 +192,7 @@ const SettingDialog = () => {
         <div className="misc-settings">
           <div className="misc-wrapper">
             <div className="misc">
-              <span className="misc-title small">
+              <span className="misc-title">
                 Start the next session automatically?
               </span>
               <Switch
@@ -184,6 +206,12 @@ const SettingDialog = () => {
             <div className="misc">
               <span className="misc-title">Flow Mode</span>
               <Switch checked={strict} onChange={handleTgogleStrict} />
+            </div>
+          </div>
+          <div className="misc-wrapper">
+            <div className="misc">
+              <span className="misc-title">Push Notifications</span>
+              <Switch checked={notification} onChange={handleNotification} />
             </div>
           </div>
         </div>
