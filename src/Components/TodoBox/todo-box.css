@@ -1,0 +1,38 @@
+.todo-box {
+  margin-top: 0.5rem;
+}
+.todo-list-wrapper {
+  min-width: 32rem;
+  padding: 0.5rem 0rem;
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.todo-list {
+  margin: 0.35rem 0;
+  border-radius: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+}
+.todo-task {
+  font-size: 1.4rem;
+  width: 80%;
+}
+.todo-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 20%;
+}
+.todo-actions button {
+  background: transparent !important;
+  backdrop-filter: none;
+}
+.todo-actions .success-btn:hover {
+  color: yellowgreen;
+}
+.todo-actions .danger-btn:hover {
+  color: tomato;
+}

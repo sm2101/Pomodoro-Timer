@@ -51,3 +51,13 @@
 .width-100 {
   width: 100%;
 }
+.transparent {
+  background: transparent !important;
+  backdrop-filter: none;
+}
+.success-btn:hover {
+  color: yellowgreen;
+}
+.danger-btn:hover {
+  color: tomato;
+}

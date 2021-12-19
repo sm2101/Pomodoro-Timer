@@ -10,6 +10,7 @@ const StyledInput = ({
   label,
   theme,
   size,
+  classNames,
 }) => {
   return (
     <div className="styled-input-wrapper">
@@ -20,7 +21,7 @@ const StyledInput = ({
         id={id}
         type={type}
         min={min}
-        className={`styled-input ${theme} ${size}`}
+        className={`styled-input ${theme} ${size} ${classNames}`}
         value={value}
         name={name}
         onChange={onChange}

@@ -4,12 +4,14 @@ import settingReducer from "./SettingState";
 import refreshReducer from "./RefreshState";
 import userReducer from "./userState";
 import bgReducer from "./bgState";
+import todoReducer from "./todoState";
 const rootReducer = combineReducers({
   counterState: counterReducer,
   settingState: settingReducer,
   refreshState: refreshReducer,
   userState: userReducer,
   bgState: bgReducer,
+  todoState: todoReducer,
 });
 
 export default rootReducer;

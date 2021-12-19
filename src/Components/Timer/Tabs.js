@@ -17,6 +17,8 @@ import Button from "../Shared/Button";
 import UserCard from "../Shared/UserCard";
 import { Helmet } from "react-helmet";
 import addNotification from "react-push-notification";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 const Tabs = ({ tab, changeTabs }) => {
   const [secondsLeft, setSecondsLeft] = useState(null),
     [timer, setTimer] = useState(null),
@@ -50,16 +52,6 @@ const Tabs = ({ tab, changeTabs }) => {
   const handleLogin = () => {
     signInWithGoogle()
       .then((res) => {
-        window.localStorage.setItem("user", JSON.stringify(res));
-        window.localStorage.setItem(
-          "session",
-          JSON.stringify({
-            focus: res.preset1.focus,
-            short: res.preset1.short,
-            long: res.preset1.long,
-            break: res.preset1.break,
-          })
-        );
         login(dispatch, { isAuthenticated: true, user: res });
         refresh(dispatch);
       })
@@ -197,7 +189,7 @@ const Tabs = ({ tab, changeTabs }) => {
     if (user) {
       login(dispatch, {
         isAuthenticated: true,
-        user: JSON.parse(window.localStorage.getItem("user")),
+        user: jwt.decode(Cookies.get("jwt")),
       });
     }
   }, [user, loading, error, dispatch]);

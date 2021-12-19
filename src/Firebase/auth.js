@@ -2,6 +2,8 @@ import { auth, db, googleProvider } from "./index";
 import { signInWithPopup, signOut } from "@firebase/auth";
 import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { store } from "..";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 export const signInWithGoogle = async () => {
   try {
     const { user } = await signInWithPopup(auth, googleProvider);
@@ -50,7 +52,30 @@ export const signInWithGoogle = async () => {
         });
         try {
           const query = await getDoc(doc(db, "users", user.uid));
-          return { ...query.data(), image: user.photoURL };
+          await setDoc(doc(db, "todos", user.uid), {
+            activeTasks: [],
+            completedTasks: [],
+            removedTasks: [],
+          })
+            .then(() => {
+              console.log("todo doc set");
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+          const res = { ...query.data(), image: user.photoURL };
+          const token = jwt.sign({ ...res }, process.env.REACT_APP_JWT_SECRET);
+          Cookies.set("jwt", token);
+          window.localStorage.setItem(
+            "session",
+            JSON.stringify({
+              focus: res.preset1.focus,
+              short: res.preset1.short,
+              long: res.preset1.long,
+              break: res.preset1.break,
+            })
+          );
+          return res;
         } catch (err) {
           console.error(err);
           window.alert(err.message);
@@ -60,7 +85,19 @@ export const signInWithGoogle = async () => {
         window.alert(err.message);
       }
     } else {
-      return { ...query.data(), image: user.photoURL };
+      const res = { ...query.data(), image: user.photoURL };
+      const token = jwt.sign({ ...res }, process.env.REACT_APP_JWT_SECRET);
+      Cookies.set("jwt", token);
+      window.localStorage.setItem(
+        "session",
+        JSON.stringify({
+          focus: res.preset1.focus,
+          short: res.preset1.short,
+          long: res.preset1.long,
+          break: res.preset1.break,
+        })
+      );
+      return res;
     }
   } catch (err) {
     console.error(err);
@@ -71,9 +108,8 @@ export const signInWithGoogle = async () => {
 export const signOutFromGoogle = () => {
   signOut(auth)
     .then(() => {
-      localStorage.removeItem("user");
+      Cookies.remove("jwt");
       window.alert("Signed Out successfully!");
-      window.location.reload();
     })
     .catch((err) => {
       console.error(err);

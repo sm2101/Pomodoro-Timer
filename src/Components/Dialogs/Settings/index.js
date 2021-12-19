@@ -13,29 +13,22 @@ import { signInWithGoogle } from "../../../Firebase/auth";
 import { login } from "../../../App/Actions/userActions";
 import BgCard from "../../Shared/BgCard";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 import "./settings.css";
 import addNotification from "react-push-notification";
 const SettingDialog = () => {
-  const [user, setUser] = useState(null);
-  const { settingState, counterState, refreshState } = useSelector((state) => ({
-    ...state,
-  }));
+  // const [user, setUser] = useState(null);
+  const { settingState, counterState, refreshState, userState } = useSelector(
+    (state) => ({
+      ...state,
+    })
+  );
   const { focus, short, long, auto, strict, maxSession, notification } =
     counterState;
   const dispatch = useDispatch();
   const handleLogin = () => {
     signInWithGoogle()
       .then((res) => {
-        window.localStorage.setItem("user", JSON.stringify(res));
-        window.localStorage.setItem(
-          "session",
-          JSON.stringify({
-            focus: res.preset1.focus,
-            short: res.preset1.short,
-            long: res.preset1.long,
-            break: res.preset1.break,
-          })
-        );
         login(dispatch, {
           isAuthenticated: true,
           user: res,
@@ -106,14 +99,10 @@ const SettingDialog = () => {
       });
     }
   };
-  useEffect(() => {
-    setUser(
-      window.localStorage.getItem("user")
-        ? JSON.parse(window.localStorage.getItem("user"))
-        : null
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshState]);
+  // useEffect(() => {
+  //   setUser(Cookies.get("jwt") ? jwt.decode(Cookies.get("jwt")) : null);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [refreshState]);
   return (
     <Dialog open={settingState} onClose={handleClose}>
       <BlurBox id="setting-dialog" classNames="setting-box">
@@ -216,25 +205,25 @@ const SettingDialog = () => {
           </div>
         </div>
         <div id="setting-sub-title">Presets</div>
-        {user ? (
+        {userState.isAuthenticated ? (
           <div className="preset-container">
             <PresetCard
-              preset={user?.preset1}
+              preset={userState.user?.preset1}
               idx={"1"}
               loadPreset={handleLoadPreset}
             />
             <PresetCard
-              preset={user?.preset2}
+              preset={userState.user?.preset2}
               idx={"2"}
               loadPreset={handleLoadPreset}
             />
             <PresetCard
-              preset={user?.preset3}
+              preset={userState.user?.preset3}
               idx={"3"}
               loadPreset={handleLoadPreset}
             />
             <PresetCard
-              preset={user?.preset4}
+              preset={userState.user?.preset4}
               idx={"4"}
               loadPreset={handleLoadPreset}
             />

@@ -1,5 +1,11 @@
 import { db } from "./index";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "@firebase/firestore";
 
 export const getUser = async (id) => {
   let query = await getDoc(doc(db, "users", id));
@@ -42,6 +48,49 @@ export const setData = async ({
 };
 
 export const getBackgrounds = async () => {
-  let query = await getDoc(doc(db, "bgs", "default"));
-  return { ...query.data() };
+  try {
+    let query = await getDoc(doc(db, "bgs", "default"));
+    return { ...query.data() };
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getTodoTasks = async (userId) => {
+  console.log("todo func");
+  try {
+    let query = await getDoc(doc(db, "todos", userId));
+    return { ...query.data() };
+  } catch (err) {
+    console.error(err);
+  }
+};
+export const addTodoTask = async (userId, task) => {
+  try {
+    await updateDoc(doc(db, "todos", userId), {
+      activeTasks: arrayUnion(task),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+export const completeTodoTask = async (userId, activeArr, completedTask) => {
+  try {
+    await updateDoc(doc(db, "todos", userId), {
+      activeTasks: [...activeArr],
+      completedTasks: arrayUnion(completedTask),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+export const removeTodoTask = async (userId, activeArr, removedTask) => {
+  try {
+    await updateDoc(doc(db, "todos", userId), {
+      activeTasks: [...activeArr],
+      removedTasks: arrayUnion(removedTask),
+    });
+  } catch (err) {
+    console.error(err);
+  }
 };

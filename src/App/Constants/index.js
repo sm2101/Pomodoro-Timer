@@ -13,3 +13,6 @@ export const SET_CURRENT_AUDIO = "set current audio";
 export const SET_ALL_BG_DATA = "set all bg data";
 export const SET_AUDIO = "set audio";
 export const TOGGLE_AUDIO = "toogle audio";
+export const ADD_TASK = "add task";
+export const SET_TASKS = "set tasks";
+export const REMOVE_TASK = "remove task";

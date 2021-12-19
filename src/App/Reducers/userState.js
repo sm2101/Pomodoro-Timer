@@ -1,9 +1,9 @@
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 import { LOGIN, LOGOUT } from "../Constants";
 const initialState = {
-  isAuthenticated: window.localStorage.getItem("user") ? true : false,
-  user: window.localStorage.getItem("user")
-    ? JSON.parse(window.localStorage.getItem("user"))
-    : null,
+  isAuthenticated: Cookies.get("jwt") ? true : false,
+  user: Cookies.get("jwt") ? jwt.decode(Cookies.get("jwt")) : null,
 };
 const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
