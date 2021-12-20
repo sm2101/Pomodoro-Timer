@@ -8,7 +8,7 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 .notepad-title {
   color: #fff;
@@ -46,4 +46,14 @@
 .loading-text {
   font-size: small;
   margin-left: 0.5rem;
+}
+.idea-thought-input {
+  width: 100% !important;
+  height: 100% !important;
+}
+.idea-thought-input textarea:focus-visible {
+  outline: none !important;
+}
+#idea-thought-textarea {
+  height: 100% !important;
 }

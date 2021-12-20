@@ -27,15 +27,6 @@ export const setData = async ({
   name,
   preset,
 }) => {
-  console.log({
-    id,
-    focus,
-    long,
-    short,
-    longDuration,
-    name,
-    preset,
-  });
   await updateDoc(doc(db, "users", id), {
     [preset]: {
       focus,
@@ -57,8 +48,6 @@ export const getBackgrounds = async () => {
 };
 
 export const getTodoTasks = async (userId) => {
-  console.log("todo func");
-  console.log(userId);
   try {
     let query = await getDoc(doc(db, "todos", userId));
     return { ...query.data() };
@@ -96,7 +85,6 @@ export const removeTodoTask = async (userId, activeArr, removedTask) => {
   }
 };
 export const setThoughts = async (userId, text) => {
-  console.log(userId, text);
   try {
     const query = await getDoc(doc(db, "notes", userId));
     if (!query.exists()) {
@@ -127,14 +115,40 @@ export const setThoughts = async (userId, text) => {
     return err;
   }
 };
-export const setIdeas = async (userId, text) => {
+export const setIdeasOrThoughts = async (userId, arr) => {
+  let ideas = [];
+  let thoughts = [];
+  let other = [];
+  await arr.forEach((item) => {
+    if (item.startsWith("@[#idea](idea)")) {
+      let ideaStr = item.slice(14);
+      ideas.push(ideaStr.trim());
+    } else if (item.startsWith("#idea")) {
+      let ideaStr = item.slice(5);
+      ideas.push(ideaStr.trim());
+    } else if (item.startsWith("@[#thought](thought)")) {
+      let thoughtStr = item.slice(21);
+      thoughts.push(thoughtStr);
+    } else if (item.startsWith("#thought")) {
+      let thoughtStr = item.slice(7);
+      thoughts.push(thoughtStr);
+    } else {
+      other.push(item.trim());
+    }
+  });
   try {
     const query = await getDoc(doc(db, "notes", userId));
     if (!query.exists()) {
       try {
         await setDoc(doc(db, "notes", userId), {
           ideas: {
-            [new Date(Date.now).toDateString()]: arrayUnion(text),
+            [new Date(Date.now).toDateString()]: arrayUnion(...ideas),
+          },
+          thoughts: {
+            [new Date(Date.now).toDateString()]: arrayUnion(...thoughts),
+          },
+          other: {
+            [new Date(Date.now).toDateString()]: arrayUnion(...other),
           },
         });
       } catch (err) {
@@ -145,7 +159,9 @@ export const setIdeas = async (userId, text) => {
       await updateDoc(
         doc(db, "notes", userId),
         {
-          [`ideas.${dateStr}`]: arrayUnion(text),
+          [`ideas.${dateStr}`]: arrayUnion(...ideas),
+          [`thoughts.${dateStr}`]: arrayUnion(...thoughts),
+          [`other.${dateStr}`]: arrayUnion(...other),
         },
         {
           merge: true,

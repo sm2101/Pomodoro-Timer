@@ -62,7 +62,6 @@ const Tabs = ({ tab, changeTabs }) => {
       .then((res) => {
         login(dispatch, { isAuthenticated: true, user: res });
         getTodoTasks(res.id).then((data) => {
-          console.log(data?.activeTasks.length);
           if (data?.activeTasks.length !== 0) {
             setTasks(dispatch, data?.activeTasks);
           }
@@ -196,7 +195,6 @@ const Tabs = ({ tab, changeTabs }) => {
     if (loading) {
       console.log("loading");
     }
-    console.log(user);
     if (error) {
       console.error(error);
     }

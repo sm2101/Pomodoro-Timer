@@ -8,7 +8,6 @@ import addNotification from "react-push-notification";
 export const signInWithGoogle = async () => {
   try {
     const { user } = await signInWithPopup(auth, googleProvider);
-    console.log("signin user", user);
     const query = await getDoc(doc(db, "users", user.uid));
     if (!query.exists()) {
       const { counterState } = store.getState();

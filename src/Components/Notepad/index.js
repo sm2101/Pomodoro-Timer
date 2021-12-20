@@ -2,40 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import BlurBox from "../Shared/BlurBox";
 import Button from "../Shared/Button";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css";
 import "./notepad.css";
-import { setThoughts, setIdeas } from "../../Firebase/db";
+import { setIdeasOrThoughts } from "../../Firebase/db";
+import { MentionsInput, Mention } from "react-mentions";
 const Notepad = () => {
-  const [thoughts, setLocalThoughts] = useState(""),
-    [ideas, setLocalIdeas] = useState(""),
-    [ideaLoading, setIdeaLoading] = useState(false),
-    [thoughtLoading, setThoughtLoading] = useState(false);
+  const [ideasOrThoughts, setLocalIdeasOrThoughts] = useState(""),
+    [ideaLoading, setIdeaLoading] = useState(false);
   const { counterState, notepadState, userState } = useSelector((state) => ({
     ...state,
   }));
-  const handleSetThoughts = () => {
-    setThoughtLoading(true);
-    setThoughts(userState?.user?.id, thoughts).then((res) => {
-      setLocalThoughts("");
-      setThoughtLoading(false);
-    });
-  };
-  const handleSetIdeas = () => {
+  const handleSetIdeasOrThoughts = () => {
     setIdeaLoading(true);
-    setIdeas(userState?.user?.id, ideas).then((res) => {
-      setIdeaLoading(false);
-      setLocalIdeas("");
-    });
+    setIdeasOrThoughts(userState?.user?.id, ideasOrThoughts.split("\n")).then(
+      (res) => {
+        setIdeaLoading(false);
+        setLocalIdeasOrThoughts("");
+      }
+    );
   };
 
   useEffect(() => {
     if (!counterState.isActive || !notepadState) {
-      if (ideas !== "") {
-        handleSetIdeas();
-      }
-      if (thoughts !== "") {
-        handleSetThoughts();
+      if (ideasOrThoughts !== "") {
+        handleSetIdeasOrThoughts();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +38,7 @@ const Notepad = () => {
       >
         <BlurBox classNames="notepad-wrapper">
           <div className="notepad-title">
-            Ideas.txt{" "}
+            Ideas - Thoughts.txt{" "}
             {ideaLoading && (
               <span className="loading-text">
                 <i className="fas fa-cloud-download-alt"></i>{" "}
@@ -58,52 +47,36 @@ const Notepad = () => {
             )}
           </div>
           <div className="notepad" id="notepad-idea">
-            <ReactQuill
-              theme="bubble"
-              placeholder="/* Use this notepad to jot down any ideas you get */"
-              value={ideas}
-              onChange={(value) => {
-                setLocalIdeas(value);
+            <MentionsInput
+              value={ideasOrThoughts}
+              onChange={(e, value) => {
+                setLocalIdeasOrThoughts(value);
               }}
-            />
-          </div>
-          <div className="notepad-action">
-            <Button
-              text="Save"
-              classNames="transparent"
-              action={handleSetIdeas}
-              disabled={ideas === ""}
+              className="idea-thought-input"
+              placeholder="/* Notedown your thoughts/ideas here, use #idea or #thought before sentence to tag that sentece */"
             >
-              <i className="fas fa-cloud-download-alt"></i>
-            </Button>
-          </div>
-        </BlurBox>
-        <BlurBox classNames="notepad-wrapper">
-          <div className="notepad-title">
-            Thoughts.txt{" "}
-            {thoughtLoading && (
-              <span className="loading-text">
-                <i className="fas fa-cloud-download-alt"></i>{" "}
-                <span>Saving...</span>
-              </span>
-            )}
-          </div>
-          <div className="notepad" id="notepad-thoughts">
-            <ReactQuill
-              theme="bubble"
-              placeholder="/* Use this notepad to jot down any distracting thoughts you may have */"
-              value={thoughts}
-              onChange={(value) => {
-                setLocalThoughts(value);
-              }}
-            />
+              <Mention
+                trigger="#"
+                data={[
+                  {
+                    id: "idea",
+                    display: "#idea",
+                  },
+                  {
+                    id: "thought",
+                    display: "#thought",
+                  },
+                ]}
+                displayTransform={(id) => `#${id}`}
+              />
+            </MentionsInput>
           </div>
           <div className="notepad-action">
             <Button
               text="Save"
               classNames="transparent"
-              action={handleSetThoughts}
-              disabled={thoughts === ""}
+              action={handleSetIdeasOrThoughts}
+              disabled={ideasOrThoughts === ""}
             >
               <i className="fas fa-cloud-download-alt"></i>
             </Button>

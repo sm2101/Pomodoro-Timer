@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Dialog } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSetting } from "../../../App/Actions/settingActions";
@@ -17,7 +17,6 @@ import { setTasks } from "../../../App/Actions/todoActions";
 import "./settings.css";
 import addNotification from "react-push-notification";
 const SettingDialog = () => {
-  // const [user, setUser] = useState(null);
   const { settingState, counterState, userState } = useSelector((state) => ({
     ...state,
   }));
@@ -32,7 +31,6 @@ const SettingDialog = () => {
           user: res,
         });
         getTodoTasks(res.id).then((data) => {
-          console.log(data?.activeTasks.length);
           if (data?.activeTasks.length !== 0) {
             setTasks(dispatch, data?.activeTasks);
           }
@@ -73,7 +71,6 @@ const SettingDialog = () => {
     });
   };
   const handleLoadPreset = ({ focus, short, long, longDuration }) => {
-    console.log({ focus, short, long, longDuration });
     editCounter(dispatch, {
       focus,
       long,
@@ -103,10 +100,6 @@ const SettingDialog = () => {
       });
     }
   };
-  // useEffect(() => {
-  //   setUser(Cookies.get("jwt") ? jwt.decode(Cookies.get("jwt")) : null);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [refreshState]);
   return (
     <Dialog open={settingState} onClose={handleClose}>
       <BlurBox id="setting-dialog" classNames="setting-box">

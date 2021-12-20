@@ -10,8 +10,6 @@ const BgCard = () => {
   const dispatch = useDispatch();
 
   const handleBgChange = (bg, audio, name) => {
-    console.log("change triggered");
-    console.log(bg, audio, name);
     setCurrent(dispatch, bg, audio, name);
   };
 

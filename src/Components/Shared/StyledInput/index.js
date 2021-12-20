@@ -11,6 +11,7 @@ const StyledInput = ({
   theme,
   size,
   classNames,
+  onKeyDown,
 }) => {
   return (
     <div className="styled-input-wrapper">
@@ -25,6 +26,7 @@ const StyledInput = ({
         value={value}
         name={name}
         onChange={onChange}
+        onKeyDown={onKeyDown}
       />
     </div>
   );

@@ -26,13 +26,20 @@ const TaskDialog = ({ num, id }) => {
     setTask(e.target.value);
   };
   const handleAddTask = () => {
-    const newTask = { task, createdAt: new Date(Date.now()), id: uuidv4() };
-    addTask(dispatch, newTask);
-    addTodoTask(id, newTask);
-    if (num === 4) {
-      handleClose();
-    } else {
-      setTask("");
+    if (task !== "") {
+      const newTask = { task, createdAt: new Date(Date.now()), id: uuidv4() };
+      addTask(dispatch, newTask);
+      addTodoTask(id, newTask);
+      if (num === 4) {
+        handleClose();
+      } else {
+        setTask("");
+      }
+    }
+  };
+  const handleEnter = (e) => {
+    if (e.code === "Enter" || e.code === "NumpadEnter") {
+      handleAddTask();
     }
   };
   return (
@@ -59,6 +66,7 @@ const TaskDialog = ({ num, id }) => {
               classNames="text-left"
               value={task}
               onChange={handleChange}
+              onKeyDown={handleEnter}
             />
           </div>
           <DialogActions>
