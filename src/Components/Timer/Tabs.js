@@ -19,6 +19,9 @@ import { Helmet } from "react-helmet";
 import addNotification from "react-push-notification";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { getTodoTasks } from "../../Firebase/db";
+import { setTasks } from "../../App/Actions/todoActions";
+import { toggleDrawer } from "../../App/Actions/notepadActions";
 const Tabs = ({ tab, changeTabs }) => {
   const [secondsLeft, setSecondsLeft] = useState(null),
     [timer, setTimer] = useState(null),
@@ -29,10 +32,15 @@ const Tabs = ({ tab, changeTabs }) => {
       long: 0,
     });
 
-  const { counterState, refreshState, userState } = useSelector((state) => ({
-    ...state,
-  }));
+  const { counterState, refreshState, userState, notepadState } = useSelector(
+    (state) => ({
+      ...state,
+    })
+  );
   const dispatch = useDispatch();
+  const handleToggleNotepad = () => {
+    toggleDrawer(dispatch);
+  };
   const handleNotifiactiosn = (title, subtitle, message) => {
     if (counterState.notification) {
       addNotification({
@@ -53,6 +61,12 @@ const Tabs = ({ tab, changeTabs }) => {
     signInWithGoogle()
       .then((res) => {
         login(dispatch, { isAuthenticated: true, user: res });
+        getTodoTasks(res.id).then((data) => {
+          console.log(data?.activeTasks.length);
+          if (data?.activeTasks.length !== 0) {
+            setTasks(dispatch, data?.activeTasks);
+          }
+        });
         refresh(dispatch);
       })
       .catch((err) => {
@@ -298,6 +312,12 @@ const Tabs = ({ tab, changeTabs }) => {
             <div className="user-cont">
               <UserCard user={userState.user} />
             </div>
+            <Button
+              action={handleToggleNotepad}
+              classNames={`notes-btn rounded ${!notepadState && "transparent"}`}
+            >
+              <i className="fas fa-file-alt"></i>
+            </Button>
           </>
         )}
       </div>

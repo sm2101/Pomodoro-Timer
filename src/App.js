@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAll } from "./App/Actions/bgActions";
 import Timer from "./Components/Timer";
 import SettingDialog from "./Components/Dialogs/Settings";
-import { getBackgrounds, getTodoTasks } from "./Firebase/db";
+import { getBackgrounds } from "./Firebase/db";
 import { Notifications } from "react-push-notification";
-import { addTask, removeTask, setTasks } from "./App/Actions/todoActions";
+import Notepad from "./Components/Notepad";
 const App = () => {
   const audioRef = useRef();
   const { counterState, bgState, userState } = useSelector((state) => ({
@@ -33,20 +33,14 @@ const App = () => {
     counterState.isActive,
   ]);
   useEffect(() => {
-    getBackgrounds().then((res) => {
-      setAll(dispatch, res.data);
-    });
-  }, [dispatch]);
-  useEffect(() => {
-    if (userState.isAuthenticated) {
-      const id = userState.user?.id;
-      getTodoTasks(id).then((data) => {
-        setTasks(dispatch, data?.activeTasks);
+    getBackgrounds()
+      .then((res) => {
+        setAll(dispatch, res?.data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    } else {
-      removeTask(dispatch, []);
-    }
-  }, [dispatch, userState.isAuthenticated, userState.user]);
+  }, [dispatch]);
   return (
     <>
       <div
@@ -59,6 +53,7 @@ const App = () => {
         <Notifications position="bottom-right" />
         <Timer />
         <SettingDialog />
+        {userState.isAuthenticated && <Notepad />}
         <audio src={bgState.audio ? bgState.audio : ""} loop ref={audioRef} />
       </div>
     </>

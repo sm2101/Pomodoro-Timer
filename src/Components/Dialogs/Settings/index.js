@@ -12,17 +12,15 @@ import Button from "../../Shared/Button";
 import { signInWithGoogle } from "../../../Firebase/auth";
 import { login } from "../../../App/Actions/userActions";
 import BgCard from "../../Shared/BgCard";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+import { getTodoTasks } from "../../../Firebase/db";
+import { setTasks } from "../../../App/Actions/todoActions";
 import "./settings.css";
 import addNotification from "react-push-notification";
 const SettingDialog = () => {
   // const [user, setUser] = useState(null);
-  const { settingState, counterState, refreshState, userState } = useSelector(
-    (state) => ({
-      ...state,
-    })
-  );
+  const { settingState, counterState, userState } = useSelector((state) => ({
+    ...state,
+  }));
   const { focus, short, long, auto, strict, maxSession, notification } =
     counterState;
   const dispatch = useDispatch();
@@ -32,6 +30,12 @@ const SettingDialog = () => {
         login(dispatch, {
           isAuthenticated: true,
           user: res,
+        });
+        getTodoTasks(res.id).then((data) => {
+          console.log(data?.activeTasks.length);
+          if (data?.activeTasks.length !== 0) {
+            setTasks(dispatch, data?.activeTasks);
+          }
         });
         refresh(dispatch);
       })

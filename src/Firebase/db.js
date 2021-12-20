@@ -58,6 +58,7 @@ export const getBackgrounds = async () => {
 
 export const getTodoTasks = async (userId) => {
   console.log("todo func");
+  console.log(userId);
   try {
     let query = await getDoc(doc(db, "todos", userId));
     return { ...query.data() };
@@ -92,5 +93,68 @@ export const removeTodoTask = async (userId, activeArr, removedTask) => {
     });
   } catch (err) {
     console.error(err);
+  }
+};
+export const setThoughts = async (userId, text) => {
+  console.log(userId, text);
+  try {
+    const query = await getDoc(doc(db, "notes", userId));
+    if (!query.exists()) {
+      try {
+        await setDoc(doc(db, "notes", userId), {
+          thoughts: {
+            [new Date(Date.now()).toDateString()]: arrayUnion(text),
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      const dateStr = new Date(Date.now()).toDateString();
+      await updateDoc(
+        doc(db, "notes", userId),
+        {
+          [`thoughts.${dateStr}`]: arrayUnion(text),
+        },
+        {
+          merge: true,
+        }
+      );
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+export const setIdeas = async (userId, text) => {
+  try {
+    const query = await getDoc(doc(db, "notes", userId));
+    if (!query.exists()) {
+      try {
+        await setDoc(doc(db, "notes", userId), {
+          ideas: {
+            [new Date(Date.now).toDateString()]: arrayUnion(text),
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      const dateStr = new Date(Date.now()).toDateString();
+      await updateDoc(
+        doc(db, "notes", userId),
+        {
+          [`ideas.${dateStr}`]: arrayUnion(text),
+        },
+        {
+          merge: true,
+        }
+      );
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 };

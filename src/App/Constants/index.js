@@ -16,3 +16,4 @@ export const TOGGLE_AUDIO = "toogle audio";
 export const ADD_TASK = "add task";
 export const SET_TASKS = "set tasks";
 export const REMOVE_TASK = "remove task";
+export const TOGGLE_DRAWER = "toggle drawer";

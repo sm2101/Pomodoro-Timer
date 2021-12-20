@@ -7,7 +7,7 @@ const todoReducer = (state = initialState, { type, payload }) => {
     case REMOVE_TASK:
       return [...payload];
     case SET_TASKS:
-      return [...payload];
+      return payload;
     default:
       return state;
   }

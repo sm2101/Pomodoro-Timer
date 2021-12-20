@@ -4,6 +4,7 @@ import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { store } from "..";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
+import addNotification from "react-push-notification";
 export const signInWithGoogle = async () => {
   try {
     const { user } = await signInWithPopup(auth, googleProvider);
@@ -109,7 +110,10 @@ export const signOutFromGoogle = () => {
   signOut(auth)
     .then(() => {
       Cookies.remove("jwt");
-      window.alert("Signed Out successfully!");
+      addNotification({
+        title: "Bye",
+        message: "Logout Successfull",
+      });
     })
     .catch((err) => {
       console.error(err);
