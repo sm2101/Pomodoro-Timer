@@ -8,6 +8,11 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+@media only screen and (max-width: 800px) {
+  .todo-list-wrapper {
+    min-width: 20rem;
+  }
+}
 .todo-list {
   margin: 0.35rem 0;
   border-radius: 0.35rem;

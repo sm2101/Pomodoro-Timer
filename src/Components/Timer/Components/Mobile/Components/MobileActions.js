@@ -13,6 +13,7 @@ import { refresh } from "../../../../../App/Actions/refreshActions";
 import { toggleSetting } from "../../../../../App/Actions/settingActions";
 import { toggleDrawer } from "../../../../../App/Actions/notepadActions";
 import BlurBox from "../../../../Shared/BlurBox";
+import TodoBox from "../../../../TodoBox";
 const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
   const [open, setOpen] = useState(false);
   const { userState, counterState, notepadState } = useSelector((state) => ({
@@ -61,6 +62,7 @@ const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
           width="80"
         />
       </div>
+      {userState.isAuthenticated && <TodoBox />}
       <BlurBox classNames="mobile-actions">
         {!useState.isAuthenticated && !userState.user ? (
           <>

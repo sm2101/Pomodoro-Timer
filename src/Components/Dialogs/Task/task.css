@@ -7,6 +7,11 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.5rem;
 }
+@media only screen and (max-width: 800px) {
+  .task-dialog {
+    min-width: 19rem;
+  }
+}
 #task-title {
   color: #fff;
   font-size: 1.5rem;
