@@ -263,7 +263,9 @@ const Tabs = ({ tab, changeTabs }) => {
           <BlurBox classNames="mobile-tabs-wrapper">
             <MobileTabs tab={tab} handleChangeTabs={handleChangeTabs} />
           </BlurBox>
-          <Count secondsLeft={secondsLeft} />
+          <div className="mobile-count-box">
+            <Count secondsLeft={secondsLeft} />
+          </div>
           <MobileActions
             startCountDown={startCountDown}
             pasueCountDown={pasueCountDown}
