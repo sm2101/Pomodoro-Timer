@@ -15,6 +15,7 @@
     min-width: 18rem;
     width: 80%;
     max-width: 26rem;
+    padding: 0 0.5rem;
   }
 }
 .todo-list {
