@@ -1,12 +1,10 @@
-.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
-  background: transparent;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
 .setting-drawer .MuiPaper-root {
   max-height: 70vh;
   overflow: auto;
+  background: transparent !important;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 .setting-box-mobile {
   height: 100%;

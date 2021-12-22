@@ -73,7 +73,7 @@
   display: flex;
   justify-content: space-evenly;
 }
-.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+.mobile-action-drawer .MuiPaper-root {
   background: transparent !important;
   border-radius: 0.5rem 0.5rem 0 0 !important;
 }

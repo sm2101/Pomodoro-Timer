@@ -116,6 +116,7 @@ const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
         onOpen={() => setOpen(true)}
         swipeAreaWidth={51}
         ModalProps={{ keepMounted: true }}
+        className="mobile-action-drawer"
       >
         <BlurBox classNames="mobile-user-drawer">
           <div className="user-action">
