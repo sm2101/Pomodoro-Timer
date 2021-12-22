@@ -100,4 +100,5 @@
 }
 .mobile-count-box {
   padding: 0 0.8rem;
+  max-width: 100vw;
 }
