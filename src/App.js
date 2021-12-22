@@ -4,15 +4,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAll } from "./App/Actions/bgActions";
 import Timer from "./Components/Timer";
 import SettingDialog from "./Components/Dialogs/Settings";
+import SettingDrawer from "./Components/Timer/Components/Mobile/Components/Settings";
 import { getBackgrounds } from "./Firebase/db";
 import { Notifications } from "react-push-notification";
 import Notepad from "./Components/Notepad";
+import MobileNotepad from "./Components/Timer/Components/Mobile/Components/Notepad";
+import { useMediaQuery } from "@mui/material";
 const App = () => {
   const audioRef = useRef();
   const { counterState, bgState, userState } = useSelector((state) => ({
     ...state,
   }));
   const dispatch = useDispatch();
+  const mobile = useMediaQuery("(max-width:800px)");
   useEffect(() => {
     audioRef.current.volume = bgState.audioVolume;
     if (window.HTMLAudioElement) {
@@ -52,8 +56,17 @@ const App = () => {
       >
         <Notifications position="bottom-right" />
         <Timer />
-        <SettingDialog />
-        {userState.isAuthenticated && <Notepad />}
+        {!mobile ? (
+          <>
+            <SettingDialog />
+            {userState.isAuthenticated && <Notepad />}
+          </>
+        ) : (
+          <>
+            <SettingDrawer />
+            {userState.isAuthenticated && <MobileNotepad />}
+          </>
+        )}
         <audio src={bgState.audio ? bgState.audio : ""} loop ref={audioRef} />
       </div>
     </>

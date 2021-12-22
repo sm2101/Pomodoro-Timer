@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+.mobile-timer-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-tabs-wrapper {
+  width: 100%;
+  padding: 1rem 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.mobile-tab-list {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  width: 100%;
+  color: #fff;
+  vertical-align: bottom;
+}
+.mobile-tab-list-item {
+  font-size: 1rem;
+  font-weight: 400;
+  transition: 0.3s ease;
+}
+.mobile-tab-list-item.active {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.mobile-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem 0.5rem 0 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.mobile-notes-btn {
+  position: absolute;
+  left: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-setting-btn {
+  position: absolute;
+  right: 0rem;
+}
+.user-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
+.mobile-user-img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+.mobile-button-container {
+  width: 100%;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+.css-9emuhu-MuiPaper-root-MuiDrawer-paper {
+  background: transparent !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+.mobile-user-drawer {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem 0.5rem;
+  padding: 0.5rem;
+}
+.user-action {
+  padding: 0.25rem 0;
+}
+.mobile-logout-btn {
+  padding: 0.8rem 0 !important;
+  font-size: 0.8rem !important;
+}

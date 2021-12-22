@@ -9,17 +9,32 @@
   transition: all 0.5s ease;
   --counter-width: 30rem;
   background-color: rgba(0, 0, 0, 0.4);
+  /* overflow: hidden; */
 }
-.timer-container.active {
-  padding-top: 2rem;
-  width: 30vw;
-  min-width: 35rem;
+@media only screen and (min-width: 800px) {
+  .timer-container.active {
+    padding-top: 2rem;
+    width: 30vw;
+    min-width: 35rem;
+  }
 }
 .timer-box {
   padding: 0.5rem 1rem;
   border-radius: 0.75rem;
   min-width: 32rem;
   min-height: 21.5rem;
+}
+@media only screen and (max-width: 800px) {
+  .timer-box {
+    min-width: 0px !important;
+    min-height: 0px !important;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 0;
+    backdrop-filter: none !important;
+    padding: 0;
+  }
 }
 .tab-list {
   list-style: none;
@@ -35,10 +50,29 @@
   cursor: pointer;
   transition: 0.3s ease;
   font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .tab-list-item.active {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 1rem;
+}
+.tab-list-item.right::after {
+  margin-left: 0.25rem;
+  color: #000;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f054";
+  font-size: small;
+}
+.tab-list-item.left::before {
+  margin-right: 0.25rem;
+  color: #000;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f053";
+  font-size: small;
 }
 .counter {
   min-width: var(--counter-width);

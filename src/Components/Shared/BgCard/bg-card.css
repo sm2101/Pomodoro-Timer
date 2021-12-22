@@ -49,6 +49,14 @@
 .audio-test {
   width: 10%;
 }
+@media only screen and (max-width: 800px) {
+  .audio-slider {
+    width: 70%;
+  }
+  .audio-test {
+    width: 15%;
+  }
+}
 .css-187mznn-MuiSlider-root {
   color: #fff !important;
 }

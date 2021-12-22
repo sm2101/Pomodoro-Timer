@@ -1,0 +1,24 @@
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+  background: transparent;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.setting-drawer .MuiPaper-root {
+  max-height: 70vh;
+  overflow: auto;
+}
+.setting-box-mobile {
+  height: 100%;
+  padding: 0.5rem 0.25rem;
+}
+.timer-input-group-mobile {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.timer-input-mobile {
+  width: 50%;
+  transition: 0.3s ease;
+  overflow: hidden;
+}

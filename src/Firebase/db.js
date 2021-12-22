@@ -6,15 +6,15 @@ import {
   updateDoc,
   arrayUnion,
 } from "@firebase/firestore";
-
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 export const getUser = async (id) => {
   let query = await getDoc(doc(db, "users", id));
-  const userStr = window.localStorage.getItem("user");
-  const user = JSON.parse(userStr);
-  window.localStorage.setItem(
-    "user",
-    JSON.stringify({ ...user, ...query.data() })
-  );
+
+  const user = jwt.decode(Cookies.get("jwt"));
+  const newUser = { ...user, ...query.data() };
+  const token = jwt.sign({ ...newUser }, process.env.REACT_APP_JWT_SECRET);
+  Cookies.set("jwt", token);
   return query.data();
 };
 

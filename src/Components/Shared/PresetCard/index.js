@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./preset-card.css";
 import StyledInput from "../StyledInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setData, getUser } from "../../../Firebase/db";
 import { refresh } from "../../../App/Actions/refreshActions";
+import { login } from "../../../App/Actions/userActions";
 import { Tooltip } from "@mui/material";
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 const PresetCard = ({ preset, idx, loadPreset }) => {
   const [focus, setFocus] = useState(25),
     [short, setShort] = useState(5),
@@ -13,11 +16,12 @@ const PresetCard = ({ preset, idx, loadPreset }) => {
     [name, setName] = useState(preset?.name),
     [open, setOpen] = useState(false);
 
+  const { refreshState } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
   const handleSetData = () => {
-    const userStr = window.localStorage.getItem("user");
-    const user = JSON.parse(userStr);
+    const user = jwt.decode(Cookies.get("jwt"));
+
     setData({
       id: user.id,
       focus,
@@ -29,7 +33,8 @@ const PresetCard = ({ preset, idx, loadPreset }) => {
     })
       .then(() => {
         getUser(user.id)
-          .then(() => {
+          .then((res) => {
+            login(dispatch, { isAuthenticated: true, user: { ...res } });
             window.alert("Preset Saved");
             refresh(dispatch);
           })
@@ -50,7 +55,7 @@ const PresetCard = ({ preset, idx, loadPreset }) => {
     setLong(preset?.long);
     setLongDuration(preset?.break);
     setName(preset?.name);
-  }, [preset]);
+  }, [preset, refreshState]);
   return (
     <div id={`preset-card-${idx}`} className="preset-card-wrapper">
       <div className="preset-card-header">

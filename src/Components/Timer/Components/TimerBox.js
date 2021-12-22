@@ -1,8 +1,8 @@
 import React from "react";
-import BlurBox from "../Shared/BlurBox";
+import BlurBox from "../../Shared/BlurBox";
 import { useSelector, useDispatch } from "react-redux";
-import { changeCurrent } from "../../App/Actions/counterActions";
-import Tabs from "./Tabs";
+import { changeCurrent } from "../../../App/Actions/counterActions";
+import Tabs from "./Tabs/index";
 const TimerBox = () => {
   const { counterState } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();

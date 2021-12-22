@@ -113,6 +113,7 @@ export const signOutFromGoogle = () => {
         title: "Bye",
         message: "Logout Successfull",
       });
+      window.location.reload();
     })
     .catch((err) => {
       console.error(err);
