@@ -1,5 +1,6 @@
 .todo-box {
   margin-top: 0.5rem;
+  min-width: 32rem;
 }
 .todo-list-wrapper {
   min-width: 32rem;
@@ -9,8 +10,11 @@
   overflow-x: hidden;
 }
 @media only screen and (max-width: 800px) {
-  .todo-list-wrapper {
-    min-width: 20rem;
+  .todo-list-wrapper,
+  .todo-box {
+    min-width: 18rem;
+    width: 80%;
+    max-width: 26rem;
   }
 }
 .todo-list {
