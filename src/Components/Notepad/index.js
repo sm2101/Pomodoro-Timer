@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleFocus } from "../../App/Actions/focusActions";
 import BlurBox from "../Shared/BlurBox";
 import Button from "../Shared/Button";
 import "./notepad.css";
@@ -11,6 +12,7 @@ const Notepad = () => {
   const { counterState, notepadState, userState } = useSelector((state) => ({
     ...state,
   }));
+  const dispatch = useDispatch();
   const handleSetIdeasOrThoughts = () => {
     setIdeaLoading(true);
     setIdeasOrThoughts(userState?.user?.id, ideasOrThoughts.split("\n")).then(
@@ -53,6 +55,8 @@ const Notepad = () => {
                 setLocalIdeasOrThoughts(value);
               }}
               className="idea-thought-input"
+              onFocus={() => toggleFocus(dispatch)}
+              onBlur={() => toggleFocus(dispatch)}
               placeholder="/* Notedown your thoughts/ideas here, use #idea or #thought before sentence to tag that sentece */"
             >
               <Mention

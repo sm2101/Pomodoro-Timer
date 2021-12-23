@@ -17,3 +17,4 @@ export const ADD_TASK = "add task";
 export const SET_TASKS = "set tasks";
 export const REMOVE_TASK = "remove task";
 export const TOGGLE_DRAWER = "toggle drawer";
+export const TOGGLE_FOCUS = "toggle focus";

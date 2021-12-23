@@ -32,7 +32,7 @@ const Tabs = ({ tab, changeTabs }) => {
       long: 0,
     });
 
-  const { counterState, refreshState } = useSelector((state) => ({
+  const { counterState, refreshState, focusState } = useSelector((state) => ({
     ...state,
   }));
   const dispatch = useDispatch();
@@ -203,35 +203,37 @@ const Tabs = ({ tab, changeTabs }) => {
     };
   }, [user, loading, error, dispatch]);
   const handleKeyEvents = (e) => {
-    if (e.code === "Space") {
-      if (!counterState.isActive) {
-        startCountDown();
-      } else {
-        pasueCountDown();
-      }
-    } else if (e.code === "KeyR") {
-      if (!counterState.isActive) {
-        addNotification({
-          title: "Countdown",
-          message: "Timer has been reset",
-        });
-        resetCountDown();
-      }
-    } else if (e.code === "Escape") {
-      if (!counterState.isActive) {
-        toggleSetting(dispatch);
-      }
-    } else if (e.code === "ArrowRight") {
-      if (tab === "short") {
-        handleChangeTabs("focus");
-      } else if (tab === "focus") {
-        handleChangeTabs("long");
-      }
-    } else if (e.code === "ArrowLeft") {
-      if (tab === "focus") {
-        handleChangeTabs("short");
-      } else if (tab === "long") {
-        handleChangeTabs("focus");
+    if (!focusState) {
+      if (e.code === "Space") {
+        if (!counterState.isActive) {
+          startCountDown();
+        } else {
+          pasueCountDown();
+        }
+      } else if (e.code === "KeyR") {
+        if (!counterState.isActive) {
+          addNotification({
+            title: "Countdown",
+            message: "Timer has been reset",
+          });
+          resetCountDown();
+        }
+      } else if (e.code === "Escape") {
+        if (!counterState.isActive) {
+          toggleSetting(dispatch);
+        }
+      } else if (e.code === "ArrowRight") {
+        if (tab === "short") {
+          handleChangeTabs("focus");
+        } else if (tab === "focus") {
+          handleChangeTabs("long");
+        }
+      } else if (e.code === "ArrowLeft") {
+        if (tab === "focus") {
+          handleChangeTabs("short");
+        } else if (tab === "long") {
+          handleChangeTabs("focus");
+        }
       }
     }
   };
@@ -242,7 +244,7 @@ const Tabs = ({ tab, changeTabs }) => {
       window.removeEventListener("keydown", handleKeyEvents);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counterState.isActive, tab]);
+  }, [counterState.isActive, tab, focusState]);
   return (
     <>
       <Header tab={tab} secondsLeft={secondsLeft} counterState={counterState} />

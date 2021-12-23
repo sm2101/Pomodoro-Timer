@@ -6,6 +6,7 @@ import userReducer from "./userState";
 import bgReducer from "./bgState";
 import todoReducer from "./todoState";
 import notepadReducer from "./notepadState";
+import focusReducer from "./foucsState";
 const rootReducer = combineReducers({
   counterState: counterReducer,
   settingState: settingReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   bgState: bgReducer,
   todoState: todoReducer,
   notepadState: notepadReducer,
+  focusState: focusReducer,
 });
 
 export default rootReducer;

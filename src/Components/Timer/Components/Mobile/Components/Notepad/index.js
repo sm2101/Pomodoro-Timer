@@ -60,6 +60,7 @@ const MobileNotepad = () => {
               onChange={(e, value) => {
                 setLocalIdeasOrThoughts(value);
               }}
+              onFocus={() => window.addEventListener("keydown", null)}
               className="idea-thought-input"
               placeholder="/* Notedown your thoughts/ideas here, use #idea or #thought before sentence to tag that sentece */"
             >

@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { toggleFocus } from "../../../App/Actions/focusActions";
 import "./styledinput.css";
 const StyledInput = ({
   id,
@@ -13,6 +15,7 @@ const StyledInput = ({
   classNames,
   onKeyDown,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="styled-input-wrapper">
       <label htmlFor={id} className={`styled-label ${theme} ${size}`}>
@@ -26,7 +29,9 @@ const StyledInput = ({
         value={value}
         name={name}
         onChange={onChange}
-        onKeyDown={onKeyDown}
+        onKeyDown={onKeyDown || null}
+        onFocus={() => toggleFocus(dispatch)}
+        onBlur={() => toggleFocus(dispatch)}
       />
     </div>
   );
