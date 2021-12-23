@@ -40,6 +40,17 @@
 .todo-task {
   font-size: 1.4rem;
   width: 80%;
+  position: relative;
+}
+.todo-task::before {
+  margin-right: 0.5rem;
+  content: "\f0c9";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: small;
+  color: #fff;
+  vertical-align: middle;
+  cursor: grab;
 }
 .todo-actions {
   display: flex;

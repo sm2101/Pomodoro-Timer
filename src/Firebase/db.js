@@ -55,6 +55,15 @@ export const getTodoTasks = async (userId) => {
     console.error(err);
   }
 };
+export const setActiveTasks = async (userId, tasks) => {
+  try {
+    await updateDoc(doc(db, "todos", userId), {
+      activeTasks: tasks,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
 export const addTodoTask = async (userId, task) => {
   try {
     await updateDoc(doc(db, "todos", userId), {
@@ -82,37 +91,6 @@ export const removeTodoTask = async (userId, activeArr, removedTask) => {
     });
   } catch (err) {
     console.error(err);
-  }
-};
-export const setThoughts = async (userId, text) => {
-  try {
-    const query = await getDoc(doc(db, "notes", userId));
-    if (!query.exists()) {
-      try {
-        await setDoc(doc(db, "notes", userId), {
-          thoughts: {
-            [new Date(Date.now()).toDateString()]: arrayUnion(text),
-          },
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      const dateStr = new Date(Date.now()).toDateString();
-      await updateDoc(
-        doc(db, "notes", userId),
-        {
-          [`thoughts.${dateStr}`]: arrayUnion(text),
-        },
-        {
-          merge: true,
-        }
-      );
-    }
-    return null;
-  } catch (err) {
-    console.error(err);
-    return err;
   }
 };
 export const setIdeasOrThoughts = async (userId, arr) => {

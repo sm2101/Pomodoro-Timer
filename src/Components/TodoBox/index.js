@@ -4,6 +4,7 @@ import Button from "../Shared/Button";
 import "./todo-box.css";
 import TaskDialog from "../Dialogs/Task";
 import { useSelector } from "react-redux";
+import { setActiveTasks } from "../../Firebase/db";
 import { removeTask, setTasks } from "../../App/Actions/todoActions";
 import { completeTodoTask, removeTodoTask } from "../../Firebase/db";
 import { useDispatch } from "react-redux";
@@ -53,6 +54,7 @@ const TodoBox = () => {
     );
 
     setTasks(dispatch, items);
+    setActiveTasks(userState.user?.id, items);
   };
   return (
     <div className="todo-box">
