@@ -62,8 +62,7 @@
 .MuiSwitch-track {
   background: rgb(255, 255, 255) !important;
 }
-.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked
-  + .MuiSwitch-track {
+.Mui-checked + .MuiSwitch-track {
   background: rgb(81, 255, 0) !important;
 }
 .preset-login-wrapper {
