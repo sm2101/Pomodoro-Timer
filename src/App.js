@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAll } from "./App/Actions/bgActions";
+import { getTodoTasks } from "./Firebase/db";
 import Timer from "./Components/Timer";
 import SettingDialog from "./Components/Dialogs/Settings";
 import SettingDrawer from "./Components/Timer/Components/Mobile/Components/Settings";
@@ -10,6 +11,7 @@ import { Notifications } from "react-push-notification";
 import Notepad from "./Components/Notepad";
 import MobileNotepad from "./Components/Timer/Components/Mobile/Components/Notepad";
 import { useMediaQuery } from "@mui/material";
+import { setTasks } from "./App/Actions/todoActions";
 const App = () => {
   const audioRef = useRef();
   const { counterState, bgState, userState } = useSelector((state) => ({
@@ -37,6 +39,19 @@ const App = () => {
     counterState.isActive,
   ]);
   useEffect(() => {
+    if (userState.isAuthenticated && userState.user) {
+      getTodoTasks(userState.user?.id)
+        .then((data) => {
+          if (data?.activeTasks.length !== 0) {
+            setTasks(dispatch, data?.activeTasks);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      setTasks(dispatch, []);
+    }
     getBackgrounds()
       .then((res) => {
         setAll(dispatch, res?.data);
@@ -44,7 +59,7 @@ const App = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [dispatch]);
+  }, [dispatch, userState.isAuthenticated, userState.user]);
   return (
     <>
       <div

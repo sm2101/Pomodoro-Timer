@@ -18,7 +18,7 @@
     padding: 0 0.5rem;
   }
 }
-@media only screen and (max-width: 310px) {
+@media only screen and (max-width: 320px) {
   .todo-list-wrapper,
   .todo-box {
     min-width: 0;

@@ -10,7 +10,7 @@
 .mobile-tabs-wrapper {
   width: 100%;
   padding: 1rem 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   border-radius: 0 0 0.5rem 0.5rem;
