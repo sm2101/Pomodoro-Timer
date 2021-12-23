@@ -10,6 +10,8 @@
 .setting-box-mobile {
   height: 100%;
   padding: 0.5rem 0.25rem;
+  overflow: auto;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 .timer-input-group-mobile {
   display: flex;
