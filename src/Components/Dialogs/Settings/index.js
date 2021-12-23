@@ -202,7 +202,7 @@ const SettingDialog = () => {
           </div>
         </div>
         <div id="setting-sub-title">Presets</div>
-        {userState.isAuthenticated ? (
+        {userState.isAuthenticated && userState.user ? (
           <div className="preset-container">
             <PresetCard
               preset={userState.user?.preset1}
