@@ -113,8 +113,6 @@ const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
         open={open}
         anchor="bottom"
         onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        swipeAreaWidth={51}
         ModalProps={{ keepMounted: true }}
         className="mobile-action-drawer"
       >

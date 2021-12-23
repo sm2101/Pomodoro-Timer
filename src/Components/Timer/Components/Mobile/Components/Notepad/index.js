@@ -28,6 +28,11 @@ const MobileNotepad = () => {
       toggleDrawer(dispatch);
     }
   };
+  const handleOpen = () => {
+    if (!notepadState) {
+      toggleDrawer(dispatch);
+    }
+  };
   useEffect(() => {
     if (!notepadState) {
       if (ideasOrThoughts !== "") {
@@ -41,6 +46,7 @@ const MobileNotepad = () => {
       <SwipeableDrawer
         open={notepadState}
         onClose={handleClose}
+        onOpen={handleOpen}
         anchor="top"
         className="notepad-drawer"
       >

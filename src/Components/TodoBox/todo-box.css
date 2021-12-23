@@ -1,6 +1,8 @@
 .todo-box {
   margin-top: 0.5rem;
   min-width: 32rem;
+  /* max-height: 50vh;
+  overflow: auto; */
 }
 .todo-list-wrapper {
   min-width: 32rem;
