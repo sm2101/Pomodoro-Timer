@@ -11,23 +11,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
-@media only screen and (max-width: 800px) {
-  .todo-list-wrapper,
-  .todo-box {
-    min-width: 18rem;
-    width: 80%;
-    max-width: 26rem;
-    padding: 0 0.5rem;
-  }
-}
-@media only screen and (max-width: 320px) {
-  .todo-list-wrapper,
-  .todo-box {
-    min-width: 0;
-    width: 100%;
-    padding: 0 0.5rem;
-  }
-}
 .todo-list {
   margin: 0.35rem 0;
   border-radius: 0.35rem;
@@ -41,6 +24,7 @@
   font-size: 1.4rem;
   width: 80%;
   position: relative;
+  transition: 0.3s ease;
 }
 .todo-task::before {
   margin-right: 0.5rem;
@@ -66,4 +50,27 @@
 }
 .todo-actions .danger-btn:hover {
   color: tomato;
+}
+@media only screen and (max-width: 800px) {
+  .todo-list-wrapper,
+  .todo-box {
+    min-width: 18rem;
+    width: 100%;
+    max-width: 26rem;
+    padding: 0 0.5rem;
+  }
+  .todo-task {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 340px) {
+  .todo-list-wrapper,
+  .todo-box {
+    min-width: 0;
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+  .todo-task {
+    font-size: 1rem;
+  }
 }

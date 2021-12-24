@@ -204,6 +204,7 @@ const Tabs = ({ tab, changeTabs }) => {
   }, [user, loading, error, dispatch]);
   const handleKeyEvents = (e) => {
     if (!focusState) {
+      e.preventDefault();
       if (e.code === "Space") {
         if (!counterState.isActive) {
           startCountDown();
