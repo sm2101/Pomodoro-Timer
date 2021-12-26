@@ -47,7 +47,8 @@
   color: #000;
 }
 .setting-btn,
-.logout-btn {
+.logout-btn,
+.dashboard-btn {
   position: absolute;
   left: 0;
   top: 0;
@@ -56,6 +57,10 @@
   width: 0;
   overflow: hidden;
   white-space: nowrap;
+}
+.dashboard-btn {
+  height: 3rem !important;
+  border-radius: 50%;
 }
 .setting-btn {
   height: 3rem !important;
@@ -68,14 +73,19 @@
 .user-option.active:hover > i {
   transform: rotateZ(-180deg);
 }
-.user-option.active:hover .setting-btn {
+.user-option.active:hover .dashboard-btn {
   opacity: 1;
   left: 3.5rem;
   width: 3rem !important;
 }
-.user-option.active:hover .logout-btn {
+.user-option.active:hover .setting-btn {
   opacity: 1;
   left: 7rem;
+  width: 3rem !important;
+}
+.user-option.active:hover .logout-btn {
+  opacity: 1;
+  left: 10.5rem;
   width: 8rem !important;
 }
 .user-option.active > i {

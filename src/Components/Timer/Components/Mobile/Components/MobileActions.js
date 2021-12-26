@@ -14,12 +14,14 @@ import { toggleSetting } from "../../../../../App/Actions/settingActions";
 import { toggleDrawer } from "../../../../../App/Actions/notepadActions";
 import BlurBox from "../../../../Shared/BlurBox";
 import TodoBox from "../../../../TodoBox";
+import { useNavigate } from "react-router";
 const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
   const [open, setOpen] = useState(false);
   const { userState, counterState, notepadState } = useSelector((state) => ({
     ...state,
   }));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleToggleNotepad = () => {
     toggleDrawer(dispatch);
   };
@@ -41,6 +43,9 @@ const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
   const handleLogout = () => {
     signOutFromGoogle();
     logout(dispatch);
+  };
+  const goToDashboard = () => {
+    navigate("/dashbaord");
   };
   return (
     <>
@@ -118,6 +123,14 @@ const MobileActions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
       >
         <BlurBox classNames="mobile-user-drawer">
           <div className="user-action">
+            <Button
+              text="Dashboard"
+              classNames="transparent mobile-dashboard-btn"
+              width={100}
+              action={goToDashboard}
+            >
+              <i className="fas fa-home"></i>
+            </Button>
             <Button
               text="Logout"
               classNames="bg-red mobile-logout-btn"

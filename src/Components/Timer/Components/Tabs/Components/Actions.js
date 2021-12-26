@@ -53,7 +53,7 @@ const Actions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
           width="80"
         />
       </div>
-      {!userState.isAuthenticated ? (
+      {!userState.isAuthenticated && !userState.user ? (
         <div className="login-cont">
           <Button
             id="auth-btn"

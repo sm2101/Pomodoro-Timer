@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgba(0, 0, 0, 0.5);
 }
 .mobile-tabs-wrapper {
   width: 100%;
@@ -96,6 +97,10 @@
 }
 .mobile-logout-btn {
   padding: 0.8rem 0 !important;
+  font-size: 0.8rem !important;
+}
+.mobile-dashboard-btn {
+  padding: 0.25rem 0 1rem 0 !important;
   font-size: 0.8rem !important;
 }
 .mobile-count-box {
