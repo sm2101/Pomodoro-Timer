@@ -23,6 +23,10 @@
   border-radius: 0.75rem;
   min-width: 32rem;
   min-height: 21.5rem;
+  position: relative;
+}
+.timer-box.active {
+  min-height: 17rem;
 }
 @media only screen and (max-width: 800px) {
   .timer-box {
@@ -137,10 +141,11 @@
   padding: 0 0.5rem;
 }
 .notes-btn {
-  position: relative;
-  left: 106%;
-  bottom: 0.5rem;
+  position: absolute;
+  left: 0;
+  bottom: 1.5rem;
   display: flex;
+  border-radius: 50% !important;
   justify-content: center;
   align-items: center;
 }

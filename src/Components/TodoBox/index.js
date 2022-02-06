@@ -6,16 +6,20 @@ import TaskDialog from "../Dialogs/Task";
 import { useSelector } from "react-redux";
 import { setActiveTasks } from "../../Firebase/db";
 import { removeTask, setTasks } from "../../App/Actions/todoActions";
-import { completeTodoTask, removeTodoTask } from "../../Firebase/db";
+import {
+  completeTodoTask,
+  removeTodoTask,
+  getTodoTasks,
+} from "../../Firebase/db";
 import { useDispatch } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const TodoBox = () => {
-  const { todoState, userState } = useSelector((state) => ({ ...state }));
+const TodoBox = ({ dashboard }) => {
+  const { todoState, userState, tags } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const handleRemoveTask = (id) => {
-    const newArr = todoState.filter((item) => item.id !== id);
-    const removedTask = todoState.filter((item) => item.id === id);
+    const newArr = todoState.activeTasks.filter((item) => item.id !== id);
+    const removedTask = todoState.activeTasks.filter((item) => item.id === id);
     removeTask(dispatch, newArr);
     return [newArr, removedTask];
   };
@@ -24,6 +28,19 @@ const TodoBox = () => {
     completeTodoTask(userState.user?.id, newArr, {
       ...removedTask[0],
       updatedAt: new Date(Date.now()),
+    }).then(() => {
+      if (userState.isAuthenticated && userState.user) {
+        getTodoTasks(userState.user?.id)
+          .then((data) => {
+            console.log(data);
+            setTasks(dispatch, data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        setTasks(dispatch, []);
+      }
     });
   };
   const handleDiscardTask = (id) => {
@@ -31,6 +48,18 @@ const TodoBox = () => {
     removeTodoTask(userState.user?.id, newArr, {
       ...removedTask[0],
       updatedAt: new Date(Date.now()),
+    }).then(() => {
+      if (userState.isAuthenticated && userState.user) {
+        getTodoTasks(userState.user?.id)
+          .then((data) => {
+            setTasks(dispatch, data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        setTasks(dispatch, []);
+      }
     });
   };
   const reorder = (list, startIndex, endIndex) => {
@@ -48,26 +77,31 @@ const TodoBox = () => {
     }
 
     const items = reorder(
-      todoState,
+      todoState.activeTasks,
       result.source.index,
       result.destination.index
     );
 
-    setTasks(dispatch, items);
+    setTasks(dispatch, { activeTasks: items });
     setActiveTasks(userState.user?.id, items);
   };
   return (
-    <div className="todo-box">
-      <TaskDialog num={todoState.length} id={userState.user?.id} />
+    <div className={`todo-box ${dashboard && "dashboard-todo"}`}>
+      <TaskDialog
+        num={todoState?.activeTasks?.length}
+        id={userState.user?.id}
+        dashboard={dashboard}
+        tags={tags}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {(provided, snapshot) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="todo-list-wrapper"
+              className={`todo-list-wrapper ${dashboard && "dashboard-todo"}`}
             >
-              {todoState.map((item, idx) => (
+              {todoState?.activeTasks?.map((item, idx) => (
                 <Draggable key={item.id} draggableId={item.id} index={idx}>
                   {(provided, snapshot) => (
                     <div
@@ -75,23 +109,57 @@ const TodoBox = () => {
                       {...provided.draggableProps}
                       ref={provided.innerRef}
                     >
-                      <BlurBox classNames="todo-list" key={idx}>
-                        <span className="todo-task">{item.task}</span>
-                        <span className="todo-actions">
-                          <Button
-                            classNames="success-btn"
-                            action={() => handleCompleteTask(item.id)}
-                          >
-                            <i className="fas fa-check"></i>
-                          </Button>
-                          <Button
-                            classNames="danger-btn"
-                            action={() => handleDiscardTask(item.id)}
-                          >
-                            <i className="fas fa-trash"></i>
-                          </Button>
-                        </span>
-                      </BlurBox>
+                      {!dashboard ? (
+                        <BlurBox classNames="todo-list" key={idx}>
+                          <div className="todo-task">
+                            <div className="d-flex flex-column">
+                              <span className="dd-icon">{item.task}</span>
+                              <span className="text-muted fs-6">
+                                {item.tag}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="todo-actions">
+                            <Button
+                              classNames="success-btn"
+                              action={() => handleCompleteTask(item.id)}
+                            >
+                              <i className="fas fa-check"></i>
+                            </Button>
+                            <Button
+                              classNames="danger-btn"
+                              action={() => handleDiscardTask(item.id)}
+                            >
+                              <i className="fas fa-trash"></i>
+                            </Button>
+                          </span>
+                        </BlurBox>
+                      ) : (
+                        <div className="todo-list" key={idx}>
+                          <div className="todo-task">
+                            <div className="d-flex flex-column">
+                              <span className="dd-icon">{item.task}</span>
+                              <span className="text-muted fs-6">
+                                {item.tag}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="todo-actions">
+                            <Button
+                              classNames="success-btn"
+                              action={() => handleCompleteTask(item.id)}
+                            >
+                              <i className="fas fa-check"></i>
+                            </Button>
+                            <Button
+                              classNames="danger-btn"
+                              action={() => handleDiscardTask(item.id)}
+                            >
+                              <i className="fas fa-trash"></i>
+                            </Button>
+                          </span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </Draggable>

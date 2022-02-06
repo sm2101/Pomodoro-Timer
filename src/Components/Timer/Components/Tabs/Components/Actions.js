@@ -36,56 +36,61 @@ const Actions = ({ resetCountDown, startCountDown, pasueCountDown }) => {
   return (
     <>
       <div className="button-container">
-        <Button
-          id="start-btn"
-          classNames=""
-          width="15"
-          action={resetCountDown}
-          disabled={counterState.isActive}
-        >
-          <i className="fas fa-history"></i>
-        </Button>
+        {!counterState.isActive && (
+          <Button
+            id="start-btn"
+            classNames=""
+            width={`${counterState.isActive ? "0" : "15"}`}
+            action={resetCountDown}
+            disabled={counterState.isActive}
+          >
+            <i className="fas fa-history"></i>
+          </Button>
+        )}
         <Button
           id="start-btn"
           classNames={!counterState.isActive ? "bg-green" : "bg-red"}
           text={`${!counterState.isActive ? "Start" : "Pause"} (space)`}
           action={!counterState.isActive ? startCountDown : pasueCountDown}
-          width="80"
+          width={`${counterState.isActive ? "100" : "80"}`}
         />
       </div>
-      {!userState.isAuthenticated && !userState.user ? (
-        <div className="login-cont">
-          <Button
-            id="auth-btn"
-            text="Login"
-            action={handleLogin}
-            width="80"
-            disabled={counterState.isActive}
-          >
-            <i className="fab fa-google"></i>
-          </Button>
-          <Button
-            id="setting-btn-1"
-            width="15"
-            action={() => toggleSetting(dispatch)}
-            disabled={counterState.isActive}
-          >
-            <i className="fas fa-cog"></i>
-          </Button>
-        </div>
-      ) : (
-        <>
-          <div className="user-cont">
-            <UserCard user={userState.user} />
+      {!counterState.isActive &&
+        (!userState.isAuthenticated && !userState.user ? (
+          <div className="login-cont">
+            <Button
+              id="auth-btn"
+              text="Login"
+              action={handleLogin}
+              width="80"
+              disabled={counterState.isActive}
+            >
+              <i className="fab fa-google"></i>
+            </Button>
+            <Button
+              id="setting-btn-1"
+              width="15"
+              action={() => toggleSetting(dispatch)}
+              disabled={counterState.isActive}
+            >
+              <i className="fas fa-cog"></i>
+            </Button>
           </div>
-          <Button
-            action={handleToggleNotepad}
-            classNames={`notes-btn rounded ${!notepadState && "transparent"}`}
-          >
-            <i className="fas fa-file-alt"></i>
-          </Button>
-        </>
-      )}
+        ) : (
+          <>
+            <div className="user-cont">
+              <UserCard user={userState.user} />
+            </div>
+            <Button
+              action={handleToggleNotepad}
+              classNames={`notes-btn rounded-btn ${
+                !notepadState && "transparent"
+              }`}
+            >
+              <i className="fas fa-file-alt"></i>
+            </Button>
+          </>
+        ))}
     </>
   );
 };

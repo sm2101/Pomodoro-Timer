@@ -1,0 +1,11 @@
+{
+  "date": [
+    {
+      "startTime": "startdate",
+      "endTime": "enddate",
+      "focus": "focus",
+      "shortBreaks": "shortBreaks",
+      "longBreaks": "longBreaks"
+    }
+  ]
+}

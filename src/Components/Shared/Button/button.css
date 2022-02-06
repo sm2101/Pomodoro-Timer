@@ -61,8 +61,8 @@
 .danger-btn:hover {
   color: tomato;
 }
-.rounded {
-  border-radius: 50%;
+.rounded-btn {
+  border-radius: 50% !important;
   width: 2.5rem;
   height: 2.5rem;
 }

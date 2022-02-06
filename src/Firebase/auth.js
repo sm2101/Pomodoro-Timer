@@ -4,10 +4,12 @@ import { doc, setDoc, getDoc } from "@firebase/firestore";
 import { store } from "..";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { v4 as uuidv4 } from "uuid";
 import addNotification from "react-push-notification";
 export const signInWithGoogle = async () => {
   try {
     const { user } = await signInWithPopup(auth, googleProvider);
+    console.log(user);
     const query = await getDoc(doc(db, "users", user.uid));
     if (!query.exists()) {
       const { counterState } = store.getState();
@@ -52,10 +54,23 @@ export const signInWithGoogle = async () => {
         });
         try {
           const query = await getDoc(doc(db, "users", user.uid));
+          await setDoc(doc(db, "tags", user.uid), {
+            tags: [
+              {
+                tag: "Other",
+                id: uuidv4(),
+                color: "#fffff",
+              },
+            ],
+          });
           await setDoc(doc(db, "todos", user.uid), {
             activeTasks: [],
             completedTasks: [],
             removedTasks: [],
+            totalCompleted: 0,
+            completedTime: 0,
+            discardedTime: 0,
+            totalDiscarded: 0,
           })
             .then(() => {
               console.log("todo doc set");
@@ -79,13 +94,19 @@ export const signInWithGoogle = async () => {
         } catch (err) {
           console.error(err);
           window.alert(err.message);
+          throw new Error(err);
         }
       } catch (err) {
         console.error(err);
         window.alert(err.message);
+        throw new Error(err);
       }
     } else {
-      const res = { ...query.data(), image: user.photoURL };
+      const res = {
+        ...query.data(),
+        image: user?.providerData[0]?.photoURL,
+        name: user?.providerData[0]?.displayName,
+      };
       const token = jwt.sign({ ...res }, process.env.REACT_APP_JWT_SECRET);
       Cookies.set("jwt", token);
       window.localStorage.setItem(
@@ -102,6 +123,7 @@ export const signInWithGoogle = async () => {
   } catch (err) {
     console.error(err);
     window.alert(err.message);
+    throw new Error(err);
   }
 };
 

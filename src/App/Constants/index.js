@@ -18,3 +18,6 @@ export const SET_TASKS = "set tasks";
 export const REMOVE_TASK = "remove task";
 export const TOGGLE_DRAWER = "toggle drawer";
 export const TOGGLE_FOCUS = "toggle focus";
+export const SET_ANALYTIC_DATA = "set analytic data";
+export const ADD_TAG = "add tag";
+export const GET_TAGS = "get tags";

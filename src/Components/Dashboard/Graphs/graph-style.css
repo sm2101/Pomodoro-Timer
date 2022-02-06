@@ -1,0 +1,38 @@
+.line-chart {
+  height: fit-content;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.6rem;
+  color: #fff !important;
+}
+.doughnut-chart {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+.border-muted {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.line-chart canvas,
+.doughnut-chart canvas,
+.radar-chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.radar-chart-wrapper-pc {
+  width: 100%;
+
+  max-width: 35rem !important;
+  max-height: 35rem !important;
+}
+@media only screen and (min-width: 800px) {
+  .line-chart {
+    padding: 0.4rem 0.7rem;
+    height: 100%;
+  }
+  .line-chart canvas {
+    height: 90% !important;
+  }
+}

@@ -7,6 +7,8 @@ import bgReducer from "./bgState";
 import todoReducer from "./todoState";
 import notepadReducer from "./notepadState";
 import focusReducer from "./foucsState";
+import dataReducer from "./analytic";
+import tagReducer from "./tags";
 const rootReducer = combineReducers({
   counterState: counterReducer,
   settingState: settingReducer,
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   todoState: todoReducer,
   notepadState: notepadReducer,
   focusState: focusReducer,
+  analyticData: dataReducer,
+  tags: tagReducer,
 });
 
 export default rootReducer;

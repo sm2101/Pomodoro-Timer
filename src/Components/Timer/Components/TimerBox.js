@@ -10,7 +10,10 @@ const TimerBox = () => {
     changeCurrent(dispatch, tab);
   };
   return (
-    <BlurBox id="timer-box" classNames="timer-box">
+    <BlurBox
+      id="timer-box"
+      classNames={`timer-box ${counterState.isActive ? "active" : "inactive"}`}
+    >
       <Tabs tab={counterState.current} changeTabs={changeTabs} />
     </BlurBox>
   );
